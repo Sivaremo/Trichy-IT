@@ -132,3 +132,29 @@ function fadeOut(element) {
 
 fetchData();
 
+
+function submitForm() {
+
+  
+  const formData = {
+      BreedName: document.getElementById('BreedName').value,
+      PetName: document.getElementById('PetName').value,
+      price: document.getElementById('Price').value,
+      No_of_pets: document.getElementById('No_of_pets').value,
+      No_of_pets_sold: document.getElementById('No_of_pets_sold').value,
+  };
+
+  axios.post('http://127.0.0.1:8000/petsdata/pets/', formData)
+      .then(function (response) {
+        
+          console.log('Response from server:', response.data);
+  n
+          document.getElementById('petForm').reset();
+          fetchData();
+      })
+      .catch(function (error) {
+       
+          console.error('Error in POST request:', error);
+      });
+}
+
