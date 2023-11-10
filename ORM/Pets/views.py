@@ -31,7 +31,7 @@ class Pets_API(APIView):
         serializer=Pets_serializers(queryset,data=request.data) 
         if serializer.is_valid():
             serializer.save()
-            return Response({'message':'Updated Sucessfullyy'},status=status.HTTP_200_OK)
+            return Response({'message':f'{queryset.PetName} Updated Sucessfullyy'},status=status.HTTP_200_OK)
         return Response(serializer.errors,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
     def delete(self,request):

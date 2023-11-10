@@ -31,7 +31,7 @@ function fetchData() {
                       </td>
                       <td>${item.Total_price}</td>
                       <td>
-                        <button type="button" class="btn btn-primary mx-2 my-2" onclick="editPet(${item.id})">Edit</button>
+                        <button type="button" class="btn btn-primary mx-2 my-2" onclick="updatePet(${item.id})">Edit</button>
                         <button type="button" class="btn btn-danger" onclick="deletePet(${item.id},'${item.PetName}')">Delete</button>
                       </td>
                     </tr>
@@ -61,7 +61,7 @@ function fetchData() {
                     <td><p>${response.data.No_of_pets_sold}</p><img src="./sold.png" class="avatar"/></td>
                     <td>${response.data.Total_price}</td>
                     <td>
-                      <button type="button" class="btn btn-primary" onclick="editPet(${response.data.id})">Edit</button>
+                      <button type="button" class="btn btn-primary" onclick="updatePet(${response.data.id})">Edit</button>
                       <button type="button" class="btn btn-danger" onclick="deletePet(${response.data.id},'${response.data.PetName}')">Delete</button>
                     </td>
                   </tr>
@@ -131,6 +131,11 @@ function fadeOut(element) {
 }
 
 fetchData();
+document.getElementById('petForm').onsubmit = function (event) {
+  event.preventDefault();
+  submitForm();
+};
+
 
 function submitForm() {
  
@@ -198,4 +203,78 @@ function fadeOut(element) {
           element.style.display = 'none';
       }
   }, 100);
+}
+
+function updatePet(petId) {
+  
+  axios.get(`http://127.0.0.1:8000/petsdata/pets/?id=${petId}`)
+    .then(function (response) {
+     
+      const petData = response.data;
+
+      // Populate the form with the existing data
+      document.getElementById('BreedName').value = petData.BreedName;
+      document.getElementById('PetName').value = petData.PetName;
+      document.getElementById('Price').value = petData.price;
+      document.getElementById('No_of_pets').value = petData.No_of_pets;
+      document.getElementById('No_of_pets_sold').value = petData.No_of_pets_sold;
+
+    
+      
+      document.getElementById('petForm').onsubmit = function (event) {
+        event.preventDefault();
+        updatePetData(petId);
+      };
+
+     
+      document.getElementById('submitButton').innerText = 'Update';
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // Optional: Use smooth scrolling
+      });
+    })
+    .catch(function (error) {
+      console.error('Error fetching pet data:', error);
+    });
+}
+
+function updatePetData(petId) {
+ 
+  const formData = {
+    BreedName: document.getElementById('BreedName').value,
+    PetName: document.getElementById('PetName').value,
+    price: document.getElementById('Price').value,
+    No_of_pets: document.getElementById('No_of_pets').value,
+    No_of_pets_sold: document.getElementById('No_of_pets_sold').value,
+  };
+
+  axios.put(`http://127.0.0.1:8000/petsdata/pets/?id=${petId}`, formData)
+    .then(function (response) {
+      console.log('Response from server:', response.data);
+
+    
+      updateNotification('alert-success', response.data.message);
+
+   
+      document.getElementById('petForm').reset();
+
+      document.getElementById('submitButton').innerText = 'Submit';
+
+   
+      document.getElementById('petForm').onsubmit = submitForm;
+
+
+      fetchData();
+    })
+    .catch(function (error) {
+      console.error('Error in PUT request:', error);
+
+    n
+      updateNotification('alert-danger', 'Error updating pet.');
+    })
+    .finally(function () {
+
+      document.getElementById('loadingSpinner').style.display = 'none';
+      document.getElementById('submitButton').disabled = false;
+    });
 }
