@@ -7,6 +7,9 @@ class Pets_serializers(serializers.ModelSerializer):
         fields=['BreedName', 'PetName', 'price', 'No_of_pets', 'No_of_pets_sold']
 
 
+
+
+
 class Data_serializers(serializers.ModelSerializer):
     class Meta:
         model=Pets
