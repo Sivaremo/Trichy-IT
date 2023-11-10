@@ -72,7 +72,12 @@ class Login_APi(APIView):
     def get(self,request):
         user=request.session.get('user')
         if user:
-            return Response({'message':'user logined'},status=status.HTTP_200_OK)
+            token=RefreshToken(user)
+            user_id=token.payload['user_id']
+            user=AdminProfile.objects.filter(id=user_id).first()
+            userdetails=User_serializers(user)
+
+            return Response({'message':'user logined','id':user_id,'data': userdetails.data},status=status.HTTP_200_OK)
         return Response({'message':'Login '},status=status.HTTP_404_NOT_FOUND)
     
     def delete(self,request):
