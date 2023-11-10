@@ -13,18 +13,18 @@
         <main>
             <section>
                 <div class="m-3 me-sm-5 shadow p-3 my-5 bg-white rounded">
-                    <form>
+                    <form id="petForm">
                        
                         <div class="mb-3 ">
                             <div class="row">
                                 <div class="col-md-6">
                                     <label class="form-label">Breed type</label>
-                              <input type="text" class="form-control" aria-describedby="emailHelp">
+                              <input type="text" class="form-control"  id="Breed type" aria-describedby="emailHelp">
                               <div id="emailHelp" class="form-text">Example: Husky,German shepherd, etc</div>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">Breed type</label>
-                          <input type="text" class="form-control" aria-describedby="emailHelp">
+                                <label class="form-label">Pet Name</label>
+                          <input type="text" class="form-control" id="Pet Name" aria-describedby="emailHelp">
                           <div id="emailHelp" class="form-text">Example: Tony,Tinku, etc</div>
                         </div>
     
@@ -36,18 +36,18 @@
                           
                         <div class="mb-3">
                           <label  class="form-label">Price</label>
-                          <input type="number" class="form-control" >
+                          <input type="number" id="Price" class="form-control" >
                         </div>
                         <div class="mb-3 ">
                             <div class="row">
                                 <div class="col-md-6">
                                     <label class="form-label">No of Pets</label>
-                              <input type="number" class="form-control" aria-describedby="emailHelp">
+                              <input type="number" class="form-control" id="No_of_Pets" aria-describedby="emailHelp">
                               
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">No of pets Solds</label>
-                          <input type="number" class="form-control" aria-describedby="emailHelp">
+                          <input type="number" class="form-control" id="No_of_pets_sold" aria-describedby="emailHelp">
                           
                         </div>
     
@@ -57,7 +57,7 @@
                               
                             </div>
                       
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary" onclick="submitForm()">Submit</button>
                       </form>
 
                 </div>

@@ -26,7 +26,7 @@ function fetchData() {
                       <td>${item.No_of_pets}</td>
                       <td><p >${item.No_of_pets_sold}</p> 
                       <div class="col-sm-2 col-md-2">
-                      <img src="../Statics/sold.png" class="img-fluid"/>
+                      <img src="../Statics/sold.png" class="avatar"/>
                       </div>
                       </td>
                       <td>${item.Total_price}</td>
@@ -58,7 +58,7 @@ function fetchData() {
                     <td>${response.data.PetName}</td>
                     <td>${response.data.price}</td>
                     <td>${response.data.No_of_pets}</td>
-                    <td><p>${response.data.No_of_pets_sold}</p> <img src="./sold.png" class="img-fluid"/></td>
+                    <td><p>${response.data.No_of_pets_sold}</p><img src="./sold.png" class="avatar"/></td>
                     <td>${response.data.Total_price}</td>
                     <td>
                       <button type="button" class="btn btn-primary" onclick="editPet(${response.data.id})">Edit</button>
