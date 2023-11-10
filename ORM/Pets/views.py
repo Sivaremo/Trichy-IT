@@ -10,9 +10,10 @@ class Pets_API(APIView):
     def post(self,request):
         serializer=Pets_serializers(data=request.data)
         if serializer.is_valid():
+            name=serializer.validated_data.get('PetName')
             queryset=Pets.objects.create(**serializer.validated_data)
             queryset.save()
-            return Response({'message':'Created SucessFully'},status=status.HTTP_201_CREATED)
+            return Response({'message':f'{name} Created SucessFully'},status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     def get(self,request):
         id=request.query_params.get('id')
