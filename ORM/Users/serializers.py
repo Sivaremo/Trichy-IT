@@ -8,28 +8,11 @@ class Register_Serializers(serializers.Serializer):
     password = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
 
-    def validate(self, data):
-        password = data.get('password')
-        password2 = data.get('password2')
+class Login_Serializers(serializers.Serializer):
+    email=serializers.EmailField()
+    password=serializers.CharField(write_only=True)
 
-        if password != password2:
-            raise serializers.ValidationError("Passwords do not match")
-
-        return data
-
-    def validate_email(self, email):
-        if AdminProfile.objects.filter(email=email).exists():
-            raise serializers.ValidationError("Email is already registered.")
-        return email
-
-    def create(self, validated_data):
-        name = validated_data.get('name')
-        email = validated_data.get('email')
-        password = validated_data.get('password')
-
-        user = CustomUser(username=name, email=email, is_admin=True)
-        user.set_password(password)
-        user.save()
-
-        user_profile = AdminProfile.objects.create(user=user, name=name, password=user.password, email=email).save()
-        return user_profile
+class User_serializers(serializers.ModelSerializer):
+    class Meta:
+        model=AdminProfile
+        fields='__all__'
