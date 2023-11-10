@@ -57,7 +57,17 @@
                               
                             </div>
                       
-                        <button type="submit" class="btn btn-primary" onclick="submitForm()">Submit</button>
+                        <button type="submit" class="btn btn-primary" onclick="submitForm()" id="submitButton">Submit</button>
+                        
+                            <div class="justify-content-center"  id="loadingSpinner"  role="status" style="display: none;">
+                                <div class="spinner-border text-primary" role="status">
+                                  <span class="visually-hidden">Loading...</span>
+                                </div>
+                              </div>
+                          
+                        </form>
+                        
+                        <div id="notification" class="alert" role="alert" style="display: none;"></div>
                       </form>
 
                 </div>

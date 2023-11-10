@@ -13,7 +13,7 @@ function fetchData() {
                     <th>Price</th>
                     <th>No of Pets</th>
                     <th>No of Pets Sold</th>
-                    <th>Total Price</th>
+                    <th>Total Proof</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -48,7 +48,7 @@ function fetchData() {
                     <th>Price</th>
                     <th>No of Pets</th>
                     <th>No of Pets Sold</th>
-                    <th>Total Price</th>
+                    <th>Total Proof</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -132,10 +132,13 @@ function fadeOut(element) {
 
 fetchData();
 
-
 function submitForm() {
+ 
+  document.getElementById('loadingSpinner').style.display = 'flex';
 
-  
+
+  document.getElementById('submitButton').disabled = true;
+
   const formData = {
       BreedName: document.getElementById('BreedName').value,
       PetName: document.getElementById('PetName').value,
@@ -146,15 +149,53 @@ function submitForm() {
 
   axios.post('http://127.0.0.1:8000/petsdata/pets/', formData)
       .then(function (response) {
-        
           console.log('Response from server:', response.data);
-  n
+
+          
+          updateNotification('alert-success', response.data.message);
+
+        
           document.getElementById('petForm').reset();
+
+        
           fetchData();
       })
       .catch(function (error) {
-       
           console.error('Error in POST request:', error);
+
+     
+          updateNotification('alert-danger', 'Error submitting form.');
+
+      })
+      .finally(function () {
+       
+          document.getElementById('loadingSpinner').style.display = 'none';
+
+       
+          document.getElementById('submitButton').disabled = false;
       });
 }
+function updateNotification(alertType, message) {
+  const notificationElement = document.getElementById('notification');
+  notificationElement.className = `alert ${alertType}`;
+  notificationElement.innerHTML = message;
+  notificationElement.style.display = 'block';
 
+  // Automatically close the alert after 3 seconds (adjust as needed)
+  setTimeout(function () {
+      fadeOut(notificationElement);
+  }, 3000);
+}
+
+function fadeOut(element) {
+  let opacity = 1;
+  const fadeOutInterval = setInterval(function () {
+      if (opacity > 0) {
+          opacity -= 0.1;
+          element.style.opacity = opacity;
+      } else {
+          clearInterval(fadeOutInterval);
+          element.style.display = 'none';
+      }
+  }, 100);
+}
