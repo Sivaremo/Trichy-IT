@@ -8,29 +8,29 @@ from .serializers import *
 # Create your views here.
 class Pets_API(APIView):
     def post(self,request):
-        serializers=Pets_serializers(data=request.data)
-        if serializers.is_valid():
-            serializers.save()
+        serializer=Pets_serializers(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
             return Response({'message':'Created SucessFully'},status=status.HTTP_201_CREATED)
-        return Response(serializers.errors,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(serializer.errors,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     def get(self,request):
         id=request.query_params.get('id')
         if id:
             queryset=Pets.objects.get(id=id)
-            serializers=Data_serializers(queryset)
-            return Response(serializers.data,status=status.HTTP_200_OK)
+            serializer=Data_serializers(queryset)
+            return Response(serializer.data,status=status.HTTP_200_OK)
         else:
             queryset=Pets.objects.all()
-            serializers=Data_serializers(queryset,many=True)
-            return Response(serializers.data,status=status.HTTP_200_OK)
+            serializer=Data_serializers(queryset,many=True)
+            return Response(serializer.data,status=status.HTTP_200_OK)
     def put(self,request):
         id=request.query_params.get('id')
         queryset=Pets.objects.get(id=id)
-        serializers=Pets_serializers(queryset,data=request.data) 
-        if serializers.is_valid():
-            serializers.save()
+        serializer=Pets_serializers(queryset,data=request.data) 
+        if serializer.is_valid():
+            serializer.save()
             return Response({'message':'Updated Sucessfullyy'},status=status.HTTP_200_OK)
-        return Response(serializers.errors,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(serializer.errors,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
     def delete(self,request):
         id=request.query_params.get('id')
