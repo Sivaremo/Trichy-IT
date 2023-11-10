@@ -28,7 +28,7 @@ function fetchData() {
                       <td>${item.Total_price}</td>
                       <td>
                         <button type="button" class="btn btn-primary mx-2 my-2" onclick="editPet(${item.id})">Edit</button>
-                        <button type="button" class="btn btn-danger" onclick="deletePet(${item.id})">Delete</button>
+                        <button type="button" class="btn btn-danger" onclick="deletePet(${item.id},'${item.PetName}')">Delete</button>
                       </td>
                     </tr>
                   `).join('')}
@@ -58,7 +58,7 @@ function fetchData() {
                     <td>${response.data.Total_price}</td>
                     <td>
                       <button type="button" class="btn btn-primary" onclick="editPet(${response.data.id})">Edit</button>
-                      <button type="button" class="btn btn-danger" onclick="deletePet(${response.data.id})">Delete</button>
+                      <button type="button" class="btn btn-danger" onclick="deletePet(${response.data.id},'${response.data.PetName}')">Delete</button>
                     </td>
                   </tr>
                 </tbody>
@@ -76,47 +76,44 @@ function fetchData() {
 
 fetchData();
 function deletePet(petId, petName) {
-  // Get the delete alert element
+
   const deleteAlert = document.getElementById('deleteAlert');
 
-  // Use Axios to send a delete request to your API with parameters
   axios.delete(`http://127.0.0.1:8000/petsdata/pets/?id=${petId}`)
       .then(function (response) {
-          // Handle the success response
-          console.log('Pet deleted successfully:', response);
 
-          // Update the delete alert with success message
+          console.log( response.data.message);
+
+
           updateAlert(deleteAlert, `Pet "${petName}" deleted successfully`, 'alert-success');
 
-          // Refresh the data after deleting
           fetchData();
       })
       .catch(function (error) {
-          // Handle errors
+         
           console.error('Error deleting pet:', error);
 
-          // Update the delete alert with error message
+      
           updateAlert(deleteAlert, `Error deleting pet "${petName}" with ID ${petId}`, 'alert-danger');
       });
 }
 
-// Function to update Bootstrap alert
-function updateAlert(alertElement, message, alertType) {
-  // Set the alert content and type
-  alertElement.innerHTML = message;
-  alertElement.classList.remove('alert-success', 'alert-danger');
-  alertElement.classList.add(`alert-${alertType}`);
 
-  // Show the alert
+function updateAlert(alertElement, message, alertType) {
+
+  alertElement.innerHTML = message;
+  alertElement.classList.add(`${alertType}`);
+
+ 
   alertElement.style.opacity = 1;
 
-  // Automatically close the alert after 3 seconds (adjust as needed)
+ 
   setTimeout(function () {
       fadeOut(alertElement);
   }, 3000);
 }
 
-// Function to fade out an element
+
 function fadeOut(element) {
   let opacity = 1;
   const fadeOutInterval = setInterval(function () {
