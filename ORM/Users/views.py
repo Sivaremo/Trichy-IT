@@ -6,6 +6,8 @@ from .models import *
 from .serializers import *
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.hashers import make_password, check_password
+from rest_framework.authentication import get_authorization_header
+from .token import *
 
 class Register_API(APIView):
     def post(self, request):
@@ -70,15 +72,15 @@ class Login_APi(APIView):
         return Response(serializer.errors,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
     def get(self,request):
-        user=request.session.get('user')
-        if user:
-            token=RefreshToken(user)
+      token=get_authorization_header(request).split()
+      if token and len(token) == 2:
+            usertoken=token[1].decode('utf-8')
+            token=RefreshToken(usertoken)
             user_id=token.payload['user_id']
             user=AdminProfile.objects.filter(id=user_id).first()
             userdetails=User_serializers(user)
-
-            return Response({'message':'user logined','id':user_id,'data': userdetails.data},status=status.HTTP_200_OK)
-        return Response({'message':'Login '},status=status.HTTP_404_NOT_FOUND)
+            return Response({'message':f'Welcome {user.name}','id':user_id,'data': userdetails.data},status=status.HTTP_200_OK)
+      return Response({'message':'Login '},status=status.HTTP_404_NOT_FOUND)
     
     def delete(self,request):
         response=Response()

@@ -84,8 +84,39 @@ function fadeOut(element) {
     }, 100);
 }
 
-// Attach loginUser function to the button click event
+
 const submitButton = document.getElementById('submitButton');
 if (submitButton) {
     submitButton.addEventListener('click', loginUser);
 }
+
+
+function userLogin() {
+    axios.get('http://127.0.0.1:8000/users/log/')
+        .then(function (response) {
+            console.log('Response:', response.data);
+            const outputElement = document.getElementById('Hello');
+
+            if (Array.isArray(response.data)) {
+                outputElement.innerHTML = response.data.map(item => `
+                    <div>
+                        ${item.data.map(iteam => `<h5>${iteam.message}</h5>`).join('')}
+                    </div>
+                `).join('');
+            } else if (typeof response.data === 'object') {
+                outputElement.innerHTML = `<h5>${response.data.message}</h5>`;
+            } else {
+                console.error('Unexpected data structure:', response.data);
+            }
+        })
+        .catch(function (error) {
+            console.error('Error fetching data:', error.message);
+
+            // Handle the error, e.g., show a user-friendly message
+            const outputElement = document.getElementById('Hello');
+            const errorMessage = error.response ? error.response.data.message : 'An error occurred. Please try again later.';
+            outputElement.innerHTML = `<p>${errorMessage}</p>`;
+        });
+}
+
+userLogin();
