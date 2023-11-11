@@ -30,10 +30,10 @@
                      <p>We are happy to have you back.</p>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Email address">
+                    <input type="text" class="form-control form-control-lg bg-light fs-6" id="Email" placeholder="Email address">
                 </div>
                 <div class="input-group mb-1">
-                    <input type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Password">
+                    <input type="password" class="form-control form-control-lg bg-light fs-6" id="Password" placeholder="Password">
                 </div>
                 <div class="input-group mb-5 d-flex justify-content-between">
                     <div class="form-check">
@@ -45,9 +45,15 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <button class="btn btn-lg btn-primary w-100 fs-6">Login</button>
+                    <button class="btn btn-lg btn-primary w-100 fs-6" id="submitButton" onclick="loginUser()">Login</button>
                 </div>
-              
+                <div class="justify-content-center"  id="loadingSpinner"  role="status" style="display: none;">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                  </div>
+                  <br/>
+                  <div id="notification" class="alert" role="alert" style="display: none;"></div>
                 <div class="row">
                     <small>Don't have account? <a href="./Register.html">Sign Up</a></small>
                 </div>
@@ -55,5 +61,9 @@
        </div> 
       </div>
     </div>
+    <script src="../Statics/Js/User.js"></script>
+    
+      
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
 </html>
