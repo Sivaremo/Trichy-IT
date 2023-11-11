@@ -8,6 +8,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.hashers import make_password, check_password
 from rest_framework.authentication import get_authorization_header
 from rest_framework_simplejwt.exceptions import TokenError
+from .token import decode_refresh_token
 
 class Register_API(APIView):
     def post(self, request):
@@ -90,12 +91,10 @@ class Login_APi(APIView):
     
     def delete(self,request):
         user=request.data.get('refresh')
-        print(user)
 
         response=Response()
         if request.session.get('user') or user:
-            token=RefreshToken(user)
-            token.blacklist()
+            decode_refresh_token(user)
             request.session.flush()
             response.data={'message':'Logout Successfully'}
             response.status_code=status.HTTP_200_OK

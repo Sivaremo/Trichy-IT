@@ -90,12 +90,19 @@ if (submitButton) {
     submitButton.addEventListener('click', loginUser);
 }
 
+
+
+
 function userLogin() {
     const accessToken = localStorage.getItem('access_token');
     const refreshToken = localStorage.getItem('refresh_token');
-
+    const isIndexPage = window.location.pathname.includes('index.html');
     if (!accessToken) {
         console.error('Access token not found. User may not be logged in.');
+        if (isIndexPage){
+            window.location.href='./Login.html';
+        }
+       
         return;
     }
 
@@ -107,6 +114,7 @@ function userLogin() {
     .then(function (response) {
      
         const outputElement = document.getElementById('Hello');
+     
 
         if (Array.isArray(response.data)) {
             outputElement.innerHTML = response.data.map(item => `
@@ -127,11 +135,11 @@ function userLogin() {
         const outputElement = document.getElementById('Hello');
         const errorMessage = error.response ? error.response.data.message : 'An error occurred. Please try again later.';
         outputElement.innerHTML = `<p>${errorMessage}</p>`;
+        window.location.href='./Login.html'
     });
 }
 
 userLogin();
-
 
 function userLogout() {
     const refreshToken = localStorage.getItem('refresh_token');
@@ -142,24 +150,22 @@ function userLogout() {
     }
 
     axios.delete('http://127.0.0.1:8000/users/log/', {
-        data: { refresh: refreshToken }, // Pass the refresh token in the request body
+        data: { refresh: refreshToken }, 
     })
     .then(function (response) {
         console.log('Logout successful:', response.data);
 
-        // Clear tokens from local storage
+ 
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
 
-        // Redirect to index.html after logout
-        window.location.href = '/index.html';
+
+        window.location.href = './Login.html';
     })
     .catch(function (error) {
         console.error('Error during logout:', error.message);
 
-        // Handle the error, e.g., show a user-friendly message
-        // Example: Display an error message to the user
     });
 }
 
-userLogout();
+
