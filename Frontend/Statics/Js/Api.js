@@ -1,7 +1,7 @@
 function fetchData() {
   axios.get('http://127.0.0.1:8000/petsdata/pets/')
       .then(function (response) {
-          const outputElement = document.getElementById('output');
+          const outputElement = document.getElementById('table-responsive');
         
           if (Array.isArray(response.data)) {
             
