@@ -1,10 +1,14 @@
 function registerUser() {
+    event.preventDefault();  // Add this line
+
+    console.log('Register button clicked');
+
     const loadingSpinner = document.getElementById('loadingSpinner');
     const submitButton = document.getElementById('submitButtonRegister');
     const notificationElement = document.getElementById('notification');
 
     loadingSpinner.style.display = 'flex';
-    submitButton.disabled = true;
+
 
     const formData = {
         name: document.getElementById('Name').value,
@@ -12,22 +16,18 @@ function registerUser() {
         password: document.getElementById('Password').value,
         password2: document.getElementById('Password2').value,
     };
-    console.log(formData)
-
+   
     axios.post('http://127.0.0.1:8000/users/reg/', formData)
         .then(function (response) {
             console.log('Response from server:', response.data);
-            localStorage.setItem('access_token', response.data.access);
-            localStorage.setItem('refresh_token', response.data.refresh);
+           
 
             updateNotification('alert-success', response.data.message);
 
-            document.getElementById('Login').reset();
-
-            // Redirect to 'Login.html' after 20 seconds
-            setTimeout(function () {
-                window.location.href = 'Login.html';
-            }, 20000);
+            document.getElementById('Register').reset();
+           
+                window.location.href = './Login.html';
+           
         })
         .catch(function (error) {
             console.error('Error in POST request:', error);
@@ -53,7 +53,7 @@ function registerUser() {
         })
         .finally(function () {
             loadingSpinner.style.display = 'none';
-            submitButton.disabled = false;
+           
         });
 }
 

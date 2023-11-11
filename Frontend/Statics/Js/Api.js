@@ -142,7 +142,7 @@ function submitForm() {
   document.getElementById('loadingSpinner').style.display = 'flex';
 
 
-  document.getElementById('submitButton').disabled = true;
+  document.getElementById('SubmitData').disabled = true;
 
   const formData = {
       BreedName: document.getElementById('BreedName').value,
@@ -177,7 +177,7 @@ function submitForm() {
           document.getElementById('loadingSpinner').style.display = 'none';
 
        
-          document.getElementById('submitButton').disabled = false;
+          document.getElementById('SubmitData').disabled = false;
       });
 }
 function updateNotification(alertType, message) {
@@ -227,7 +227,7 @@ function updatePet(petId) {
       };
 
      
-      document.getElementById('submitButton').innerText = 'Update';
+      document.getElementById('SubmitData').innerText = 'Update';
       window.scrollTo({
         top: 0,
         behavior: 'smooth' // Optional: Use smooth scrolling
@@ -258,7 +258,7 @@ function updatePetData(petId) {
    
       document.getElementById('petForm').reset();
 
-      document.getElementById('submitButton').innerText = 'Submit';
+      document.getElementById('SubmitData').innerText = 'Submit';
 
    
       document.getElementById('petForm').onsubmit = submitForm;
@@ -275,6 +275,6 @@ function updatePetData(petId) {
     .finally(function () {
 
       document.getElementById('loadingSpinner').style.display = 'none';
-      document.getElementById('submitButton').disabled = false;
+      document.getElementById('SubmitData').disabled = false;
     });
 }

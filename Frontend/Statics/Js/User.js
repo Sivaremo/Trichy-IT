@@ -6,7 +6,7 @@ function loginUser() {
     submitButton.disabled = true;
 
     const formData = {
-        email: document.getElementById('Email').value,
+        email: document.getElementById('email').value,
         password: document.getElementById('Password').value,
     };
 
@@ -167,5 +167,7 @@ function userLogout() {
 
     });
 }
+
+
 
 
