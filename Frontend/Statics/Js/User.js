@@ -13,6 +13,8 @@ function loginUser() {
     axios.post('http://127.0.0.1:8000/users/log/', formData)
         .then(function (response) {
             console.log('Response from server:', response.data);
+            localStorage.setItem('access_token', response.data.access);
+            localStorage.setItem('refresh_token', response.data.refresh);
             
             updateNotification('alert-success', response.data.message);
 
@@ -63,8 +65,6 @@ function updateNotification(alertType, message) {
         notificationElement.className = `alert ${alertType}`;
         notificationElement.innerHTML = message;
         notificationElement.style.display = 'block';
-
-        // Automatically close the alert after 3 seconds (adjust as needed)
         setTimeout(function () {
             fadeOut(notificationElement);
         }, 3000);
@@ -90,33 +90,76 @@ if (submitButton) {
     submitButton.addEventListener('click', loginUser);
 }
 
-
 function userLogin() {
-    axios.get('http://127.0.0.1:8000/users/log/')
-        .then(function (response) {
-            console.log('Response:', response.data);
-            const outputElement = document.getElementById('Hello');
+    const accessToken = localStorage.getItem('access_token');
+    const refreshToken = localStorage.getItem('refresh_token');
 
-            if (Array.isArray(response.data)) {
-                outputElement.innerHTML = response.data.map(item => `
-                    <div>
-                        ${item.data.map(iteam => `<h5>${iteam.message}</h5>`).join('')}
-                    </div>
-                `).join('');
-            } else if (typeof response.data === 'object') {
-                outputElement.innerHTML = `<h5>${response.data.message}</h5>`;
-            } else {
-                console.error('Unexpected data structure:', response.data);
-            }
-        })
-        .catch(function (error) {
-            console.error('Error fetching data:', error.message);
+    if (!accessToken) {
+        console.error('Access token not found. User may not be logged in.');
+        return;
+    }
 
-            // Handle the error, e.g., show a user-friendly message
-            const outputElement = document.getElementById('Hello');
-            const errorMessage = error.response ? error.response.data.message : 'An error occurred. Please try again later.';
-            outputElement.innerHTML = `<p>${errorMessage}</p>`;
-        });
+    axios.get('http://127.0.0.1:8000/users/log/', {
+        headers: {
+            Authorization: `Bearer ${refreshToken}`,
+        },
+    })
+    .then(function (response) {
+     
+        const outputElement = document.getElementById('Hello');
+
+        if (Array.isArray(response.data)) {
+            outputElement.innerHTML = response.data.map(item => `
+                <div>
+                    ${item.data.map(iteam => `<h5>${iteam.message}</h5>`).join('')}
+                </div>
+            `).join('');
+        } else if (typeof response.data === 'object') {
+            outputElement.innerHTML = `<h5>${response.data.message}</h5>`;
+        } else {
+            console.error('Unexpected data structure:', response.data);
+        }
+    })
+    .catch(function (error) {
+        console.error('Error fetching data:', error.message);
+
+       
+        const outputElement = document.getElementById('Hello');
+        const errorMessage = error.response ? error.response.data.message : 'An error occurred. Please try again later.';
+        outputElement.innerHTML = `<p>${errorMessage}</p>`;
+    });
 }
 
 userLogin();
+
+
+function userLogout() {
+    const refreshToken = localStorage.getItem('refresh_token');
+
+    if (!refreshToken) {
+        console.error('Refresh token not found. User may not be logged in.');
+        return;
+    }
+
+    axios.delete('http://127.0.0.1:8000/users/log/', {
+        data: { refresh: refreshToken }, // Pass the refresh token in the request body
+    })
+    .then(function (response) {
+        console.log('Logout successful:', response.data);
+
+        // Clear tokens from local storage
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+
+        // Redirect to index.html after logout
+        window.location.href = '/index.html';
+    })
+    .catch(function (error) {
+        console.error('Error during logout:', error.message);
+
+        // Handle the error, e.g., show a user-friendly message
+        // Example: Display an error message to the user
+    });
+}
+
+userLogout();
