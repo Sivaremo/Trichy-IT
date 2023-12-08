@@ -14,3 +14,6 @@ class Data_serializers(serializers.ModelSerializer):
     class Meta:
         model=Pets
         fields='__all__'
+
+class Bulkimport_serializers(serializers.Serializer):
+    files=serializers.FileField(required=True)
