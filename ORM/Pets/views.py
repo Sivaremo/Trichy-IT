@@ -61,7 +61,7 @@ class Bulkimport(APIView):
 
                 if pets_serializer.is_valid():
                     pets_serializer.save()
-                    return Response({'message': 'Data saved successfully'}, status=status.HTTP_201_CREATED)
+                    return Response({'message': 'Bulk Datas saved successfully'}, status=status.HTTP_201_CREATED)
                 else:
                     return Response({'error': pets_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
