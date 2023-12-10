@@ -41,20 +41,24 @@ class Pets_API(APIView):
         queryset.delete()
         return Response({'message':'Deleted Sucessfully'},status=status.HTTP_200_OK)
 
-
 class Bulkimport(APIView):
-    parser_classes = [FileUploadParser]
-    def post(self,request):
-         file_serializer = Bulkimport_serializers(data=request.data)
-         if file_serializer.is_valid():
-            uploaded_file = file_serializer.validated_data['file']
+    def post(self, request):
+        file_serializer = Bulkimport_serializers(data=request.data)
+        
+        if file_serializer.is_valid():
+            uploaded_files = request.FILES.getlist('files')
+
             try:
                 import pandas as pd
-                excel_files = [file for file in uploaded_file if file.endswith('.xlsx') or file.endswith('.xls')]
-                for excel_file in excel_files:
-                    df = pd.read_excel(uploaded_file)
-                    pets_data = df.to_dict(orient='records')
-                    pets_serializer = Pets_serializers(data=pets_data, many=True)
+                pets_data = []
+
+                for uploaded_file in uploaded_files:
+                    if uploaded_file.name.endswith('.xlsx') or uploaded_file.name.endswith('.xls'):
+                        df = pd.read_excel(uploaded_file)
+                        pets_data.extend(df.to_dict(orient='records'))
+                    
+                pets_serializer = Pets_serializers(data=pets_data, many=True)
+
                 if pets_serializer.is_valid():
                     pets_serializer.save()
                     return Response({'message': 'Data saved successfully'}, status=status.HTTP_201_CREATED)
@@ -63,6 +67,5 @@ class Bulkimport(APIView):
 
             except Exception as e:
                 return Response({'error': f'Error reading the file: {e}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-         else:
-             return Response({'errors':file_serializer.errors},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-            
+        else:
+            return Response({'errors': file_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)

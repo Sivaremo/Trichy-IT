@@ -86,7 +86,7 @@ function deletePet(petId, petName) {
   axios.delete(`http://127.0.0.1:8000/petsdata/pets/?id=${petId}`)
       .then(function (response) {
 
-          console.log( response.data.message);
+         
 
 
           updateAlert(deleteAlert, `Pet "${petName}" deleted successfully`, 'alert-success');
@@ -277,4 +277,45 @@ function updatePetData(petId) {
       document.getElementById('loadingSpinner').style.display = 'none';
       document.getElementById('SubmitData').disabled = false;
     });
+}
+const fileInput = document.getElementById('file');
+const loadingDiv = document.querySelector('.loading');
+const labelElement = document.querySelector('.labelfile');
+
+fileInput.addEventListener('change', handleFileUpload);
+
+async function handleFileUpload(event) {
+  const files = event.target.files;
+
+  if (files.length === 0) {
+    return; // No files selected
+  }
+
+  const fileToUpload = files[0];
+  const formData = new FormData();
+  formData.append('files', fileToUpload, fileToUpload.name);
+  labelElement.style.display = 'none';
+  loadingDiv.style.display = 'block';
+
+  try {
+    const response = await axios.post('http://127.0.0.1:8000/petsdata/bulkimport/', formData, {
+     
+    });
+
+    if (response.status === 201) {
+      updateNotification('alert-success',response.data.message)
+      
+    } else if (response.status === 400) {
+      updateNotification('alert-danger',response.data.error)
+     
+    } else {
+      updateNotification('alert-danger',response.data.error)
+    }
+  } catch (error) {
+    console.error('Error during API call:', error);
+  } finally {
+    loadingDiv.style.display = 'none';
+    labelElement.style.display = 'block';
+    fetchData();
+  }
 }
