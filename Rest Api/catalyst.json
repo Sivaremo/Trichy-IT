@@ -1,0 +1,12 @@
+{
+  "function_name": "django-api",
+  "runtime": "python3",
+  "entry_point": "gunicorn <your_django_project>.wsgi --bind 0.0.0.0:$CATALYST_PORT",
+  "functions": {
+    "targets": [
+      "ORM"
+    ],
+    "ignore": [],
+    "source": "functions"
+  }
+}

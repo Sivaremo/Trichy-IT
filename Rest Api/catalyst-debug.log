@@ -1,0 +1,63 @@
+[debug] [2024-12-07T15:54:21.600Z] : 
+[debug] [2024-12-07T15:54:21.603Z] : ----------------------------------------------------------------------
+[debug] [2024-12-07T15:54:21.604Z] : Command:      C:\Program Files\nodejs\node.exe C:\Users\admin\AppData\Roaming\npm\node_modules\zcatalyst-cli\lib\bin\catalyst.js functions:add
+[debug] [2024-12-07T15:54:21.604Z] : CLI Version:  1.17.6
+[debug] [2024-12-07T15:54:21.605Z] : Platform:     win32
+[debug] [2024-12-07T15:54:21.605Z] : Node Version: v20.5.1
+[debug] [2024-12-07T15:54:21.606Z] : Time:         Sat Dec 07 2024 21:24:21 GMT+0530 (India Standard Time)
+[debug] [2024-12-07T15:54:21.606Z] : ----------------------------------------------------------------------
+[debug] [2024-12-07T15:54:21.606Z] : 
+[debug] [2024-12-07T15:54:23.936Z] : > authorizing via signed-in user option
+[debug] [2024-12-07T15:54:23.937Z] : > command requires scopes: ["ZohoCatalyst.projects.ALL","ZohoCatalyst.functions.ALL"]
+[debug] [2024-12-07T15:54:23.967Z] : >>>> HTTP REQUEST : GET https://api.catalyst.zoho.in/baas/v1/project/10911000000007080 
+
+[error] [2024-12-07T15:56:33.609Z] : × API Error: socket hang up
+[debug] [2024-12-07T15:56:33.610Z] : Error Stack: CatalystError: API Error: socket hang up
+    at API.<anonymous> (C:\Users\admin\AppData\Roaming\npm\node_modules\zcatalyst-cli\lib\internal\api.js:214:32)
+    at Generator.next (<anonymous>)
+    at C:\Users\admin\AppData\Roaming\npm\node_modules\zcatalyst-cli\lib\internal\api.js:31:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Users\admin\AppData\Roaming\npm\node_modules\zcatalyst-cli\lib\internal\api.js:27:12)
+    at Request._callback (C:\Users\admin\AppData\Roaming\npm\node_modules\zcatalyst-cli\lib\internal\api.js:194:67)
+    at self.callback (C:\Users\admin\AppData\Roaming\npm\node_modules\zcatalyst-cli\node_modules\request\request.js:185:22)
+    at Request.emit (node:events:514:28)
+    at Request.onRequestError (C:\Users\admin\AppData\Roaming\npm\node_modules\zcatalyst-cli\node_modules\request\request.js:877:8)
+    at ClientRequest.emit (node:events:514:28)
+[debug] [2024-12-07T15:56:33.614Z] : Original Error: Error: socket hang up
+    at connResetException (node:internal/errors:720:14)
+    at TLSSocket.socketOnEnd (node:_http_client:519:23)
+    at TLSSocket.emit (node:events:526:35)
+    at endReadableNT (node:internal/streams/readable:1376:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+[debug] [2024-12-07T15:56:33.614Z] : Error Status: 500
+[info] [2024-12-07T15:56:33.615Z] : Kindly contact Catalyst support [support@zohocatalyst.com] if you need any further assistance
+[debug] [2024-12-07T15:56:33.616Z] : EXEC ENDED with event: Error (Unexpected), message: API Error: socket hang up
+[debug] [2024-12-07T15:56:33.616Z] : TOTAL DURATION OF COMMAND EXEC : 129753
+[debug] [2024-12-07T15:56:33.618Z] : Unable to initialise the log API
+[debug] [2024-12-07T15:56:49.237Z] : 
+[debug] [2024-12-07T15:56:49.240Z] : ----------------------------------------------------------------------
+[debug] [2024-12-07T15:56:49.241Z] : Command:      C:\Program Files\nodejs\node.exe C:\Users\admin\AppData\Roaming\npm\node_modules\zcatalyst-cli\lib\bin\catalyst.js functions:add
+[debug] [2024-12-07T15:56:49.241Z] : CLI Version:  1.17.6
+[debug] [2024-12-07T15:56:49.242Z] : Platform:     win32
+[debug] [2024-12-07T15:56:49.242Z] : Node Version: v20.5.1
+[debug] [2024-12-07T15:56:49.243Z] : Time:         Sat Dec 07 2024 21:26:49 GMT+0530 (India Standard Time)
+[debug] [2024-12-07T15:56:49.243Z] : ----------------------------------------------------------------------
+[debug] [2024-12-07T15:56:49.243Z] : 
+[debug] [2024-12-07T15:56:51.208Z] : > authorizing via signed-in user option
+[debug] [2024-12-07T15:56:51.208Z] : > command requires scopes: ["ZohoCatalyst.projects.ALL","ZohoCatalyst.functions.ALL"]
+[debug] [2024-12-07T15:56:51.232Z] : >>>> HTTP REQUEST : GET https://api.catalyst.zoho.in/baas/v1/project/10911000000007080 
+
+[debug] [2024-12-07T15:56:59.222Z] : <<<< HTTP RESPONSE : 200
+Response Headers: {"server":"ZGS","date":"Sat, 07 Dec 2024 15:56:59 GMT","content-type":"application/vnd.catalyst.v2+json","transfer-encoding":"chunked","connection":"keep-alive","set-cookie":["zalb_3a750b85f1=99131cfabfda186b4fe68a16fb8fedd6; Path=/; Secure; HttpOnly","ZD_CSRF_TOKEN=3b35d513-68c3-407b-ac7b-1145e82b302d;path=/;SameSite=None;Secure;priority=high","_zcsr_tmp=3b35d513-68c3-407b-ac7b-1145e82b302d;path=/;SameSite=Strict;Secure;priority=high"],"x-content-type-options":"nosniff","x-xss-protection":"1","cache-control":"private,no-cache,no-store,max-age=0,must-revalidate","pragma":"no-cache","expires":"Thu, 01 Jan 1970 00:00:00 GMT","x-frame-options":"DENY","strict-transport-security":"max-age=63072000"}
+
+[debug] [2024-12-07T15:56:59.228Z] : >>>> HTTP REQUEST : GET https://api.catalyst.zoho.in/baas/v1/project/10911000000007080/environment 
+
+[debug] [2024-12-07T15:57:02.536Z] : <<<< HTTP RESPONSE : 200
+Response Headers: {"server":"ZGS","date":"Sat, 07 Dec 2024 15:57:02 GMT","content-type":"application/vnd.catalyst.v2+json","transfer-encoding":"chunked","connection":"keep-alive","set-cookie":["zalb_3a750b85f1=7c58023b2365c117e2ff9b6feb09efa2; Path=/; Secure; HttpOnly","ZD_CSRF_TOKEN=18285048-613f-47e8-974e-a0502b411897;path=/;SameSite=None;Secure;priority=high","_zcsr_tmp=18285048-613f-47e8-974e-a0502b411897;path=/;SameSite=Strict;Secure;priority=high"],"x-content-type-options":"nosniff","x-xss-protection":"1","cache-control":"private,no-cache,no-store,max-age=0,must-revalidate","pragma":"no-cache","expires":"Thu, 01 Jan 1970 00:00:00 GMT","x-frame-options":"DENY","strict-transport-security":"max-age=63072000"}
+
+[debug] [2024-12-07T15:57:02.589Z] : >>>> HTTP REQUEST : GET https://api.catalyst.zoho.in/baas/get-details 
+Query params: {"feature_name":"integration_services"}
+
+[debug] [2024-12-07T15:57:02.939Z] : <<<< HTTP RESPONSE : 200
+Response Headers: {"server":"ZGS","date":"Sat, 07 Dec 2024 15:57:03 GMT","content-type":"application/vnd.catalyst.v2+json","transfer-encoding":"chunked","connection":"keep-alive","set-cookie":["zalb_3a750b85f1=99131cfabfda186b4fe68a16fb8fedd6; Path=/; Secure; HttpOnly","ZD_CSRF_TOKEN=3ef19f99-d706-4db4-8bc1-9741c3e689c1;path=/;SameSite=None;Secure;priority=high","_zcsr_tmp=3ef19f99-d706-4db4-8bc1-9741c3e689c1;path=/;SameSite=Strict;Secure;priority=high"],"x-content-type-options":"nosniff","x-xss-protection":"1","cache-control":"private,no-cache,no-store,max-age=0,must-revalidate","pragma":"no-cache","expires":"Thu, 01 Jan 1970 00:00:00 GMT","x-frame-options":"DENY","strict-transport-security":"max-age=63072000"}
+
